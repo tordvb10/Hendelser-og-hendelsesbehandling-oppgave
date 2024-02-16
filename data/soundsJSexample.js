@@ -1,18 +1,18 @@
 export const sounds = [
   {
-    file: "album/A-NothingButAshes.mp3",
+    file: "sounds/ah-haha.mp3",
     key: "a",
   },
   {
-    file: "album/B-TheLadder.mp3",
+    file: "sounds/among-us-reveal.mp3",
     key: "b",
   },
   {
-    file: "album/C-Impossible.mp3",
+    file: "sounds/and-you-fail.mp3",
     key: "c",
   },
   {
-    file: "album/D-ThisTimeThisPlace.mp3",
-    key: "4",
+    file: "sounds/anime-wow.mp3",
+    key: "d",
   },
 ];
