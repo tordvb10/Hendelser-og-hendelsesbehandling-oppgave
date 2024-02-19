@@ -38,6 +38,9 @@ function MakeMusicElement(soundFile) {
 }
 
 function ToPlayOrPause(key, soundFiles = sounds.soundFiles) {
+  if (document.activeElement != document.body) {
+    document.activeElement.blur();
+  }
   soundFiles.forEach((soundFile) => {
     soundFiles.forEach((toPause) => {
       document.querySelector(`audio#${toPause.key}`).paused;
@@ -62,7 +65,8 @@ function getmusic(soundFiles) {
   soundFiles.forEach((soundFile) => {
     keys.push(MakeMusicElement(soundFile));
   });
-  document.body.addEventListener("keypress", (KeyboardEvent) => {
+  document.body.addEventListener("keydown", (KeyboardEvent) => {
+    console.log(KeyboardEvent);
     ToPlayOrPause(KeyboardEvent.key, soundFiles);
   });
 }
