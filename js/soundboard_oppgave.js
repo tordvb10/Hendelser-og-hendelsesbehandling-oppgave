@@ -6,7 +6,7 @@
 // examples of how the structure can look is in the data folder
 
 //import { type } from "express/lib/response";
-import album from "../data/soundJSONexample.json" assert { type: "json" };
+import sounds from "../data/soundJSONexample.json" assert { type: "json" };
 
 //* ////////////////////////////////////// */
 
@@ -16,7 +16,7 @@ const DrumktiContent = document.querySelector("#drumkit");
 //* ////////////////////////////////////// */
 
 //*1.3. Write a console log for the fetched sounds so you know how the structure is and how you can use it */
-console.log(album);
+console.log(sounds);
 
 //* ////////////////////////////////////// */
 
@@ -29,9 +29,32 @@ function MakeMusicElement(soundFile) {
   audioElement.type = "audio/mpeg";
   audioElement.src = soundFile.file;
   audioElement.id = soundFile.key;
+  buttonElement.addEventListener("click", () => {
+    ToPlayOrPause(soundFile.key);
+  });
   DrumktiContent.appendChild(buttonElement);
   DrumktiContent.appendChild(audioElement);
   return soundFile.key;
+}
+
+function ToPlayOrPause(key, soundFiles = sounds.soundFiles) {
+  soundFiles.forEach((soundFile) => {
+    soundFiles.forEach((toPause) => {
+      document.querySelector(`audio#${toPause.key}`).paused;
+    });
+    if (key === soundFile.key) {
+      let selectedaudio = document.querySelector(`audio#${key}`);
+      switch (selectedaudio.paused) {
+        case true:
+          selectedaudio.play();
+          break;
+        case false:
+          selectedaudio.pause();
+          break;
+      }
+      console.log(soundFile);
+    }
+  });
 }
 
 function getmusic(soundFiles) {
@@ -40,31 +63,12 @@ function getmusic(soundFiles) {
     keys.push(MakeMusicElement(soundFile));
   });
   document.body.addEventListener("keypress", (KeyboardEvent) => {
-    console.log(KeyboardEvent);
-    console.log("hello world");
-    let key = KeyboardEvent.key;
-    console.log(key);
-    soundFiles.forEach((soundFile) => {
-      //document.querySelector(`audio#${key}`).pause();
-      if (key === soundFile.key) {
-        let selectedaudio = document.querySelector(`audio#${key}`);
-        switch (selectedaudio.paused) {
-          case true:
-            selectedaudio.play();
-            break;
-          case false:
-            selectedaudio.pause();
-            break;
-        }
-        console.log(soundFile);
-      }
-    });
+    ToPlayOrPause(KeyboardEvent.key, soundFiles);
   });
 }
 
-getmusic(album.soundFiles);
+getmusic(sounds.soundFiles);
 
-console.log(document.querySelector("audio#d"));
 //2.1. make a variable that creates a button element with .createElement
 
 // add textContent to the created buttonElement. Textcontent should be either the file name and/or key needed to be pressed
